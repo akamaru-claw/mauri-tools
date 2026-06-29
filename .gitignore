@@ -1,0 +1,18 @@
+# Deployment
+.env.*
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# PHP/SQLite runtime
+data/*.db
+*.log
+
+# Node
+node_modules/

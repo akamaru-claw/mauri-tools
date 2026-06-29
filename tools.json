@@ -1,0 +1,34 @@
+[
+  {
+    "id": "mauri-echo",
+    "name": "Mauri Echo",
+    "description": "Anonymes Klassenfeedback: Schüler antworten live, Lehrer sieht Antworten als Kartenwolke.",
+    "path": "echo/",
+    "icon": "📢",
+    "tags": ["Feedback", "Schule", "Anonym", "Tablet"]
+  },
+  {
+    "id": "video-delay",
+    "name": "Video Delay",
+    "description": "Verzögerte Wiedergabe für Sport-Training und Bewegungsanalyse.",
+    "path": "video-delay/",
+    "icon": "📹",
+    "tags": ["Training", "Video", "Delay"]
+  },
+  {
+    "id": "sportunterricht-tools",
+    "name": "SportUnterricht Tools",
+    "description": "Digitale Helfer für den Sportunterricht: Turniere, Stationen, Punktezähler.",
+    "path": "sportunterricht-tools/",
+    "icon": "🏃‍♂️",
+    "tags": ["Sport", "Turnier", "Schule"]
+  },
+  {
+    "id": "pyramide-volumen",
+    "name": "Pyramidenvolumen",
+    "description": "Anschauliche Erklärung und Beweis der Formel V = 1/3 · G · h, mit interaktivem Rechner.",
+    "path": "pyramide/volumen/",
+    "icon": "🔺",
+    "tags": ["Mathe", "Geometrie", "Schule"]
+  }
+]
