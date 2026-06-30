@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#1e1a4b">
   <title>Mauri Echo – Antworten</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="manifest" href="manifest.json?v=2">
 </head>
 <body>
   <div class="soundwave"></div>
