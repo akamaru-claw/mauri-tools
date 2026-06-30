@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#1e1a4b">
   <title>Mauri Echo – Antworten</title>
-  <link rel="stylesheet" href="style.css?v=2">
-  <link rel="manifest" href="manifest.json?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="manifest" href="manifest.json?v=3">
 </head>
 <body>
   <div class="soundwave"></div>
+  <a href="index.php" class="btn btn-ghost back-link" style="position:fixed;top:16px;left:16px;z-index:10;padding:10px 16px;">← Start</a>
   <div class="student-view">
     <div class="logo" aria-hidden="true">
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
