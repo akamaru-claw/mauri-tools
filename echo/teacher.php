@@ -43,7 +43,21 @@
       <div class="join-info">
         <div class="pin-box">
           <div class="label">Beitrittscode</div>
-          <div id="pinDisplay" class="pin-big">----</div>
+          <div class="pin-with-qr">
+            <div id="pinDisplay" class="pin-big">----</div>
+            <button id="qrToggleBtn" class="qr-thumb" title="QR-Code vergrößern" aria-label="QR-Code vergrößern">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="10" width="28" height="28" rx="4" fill="#1e1a4b"/>
+                <rect x="62" y="10" width="28" height="28" rx="4" fill="#1e1a4b"/>
+                <rect x="10" y="62" width="28" height="28" rx="4" fill="#1e1a4b"/>
+                <rect x="42" y="42" width="16" height="16" rx="2" fill="#fbbf24"/>
+                <rect x="46" y="14" width="8" height="8" rx="2" fill="#fbbf24"/>
+                <rect x="14" y="46" width="8" height="8" rx="2" fill="#fbbf24"/>
+                <rect x="78" y="46" width="8" height="8" rx="2" fill="#fbbf24"/>
+                <rect x="46" y="78" width="8" height="8" rx="2" fill="#fbbf24"/>
+              </svg>
+            </button>
+          </div>
         </div>
         <div class="qr-box">
           <canvas id="qrCanvas"></canvas>
@@ -51,6 +65,15 @@
             <input type="text" id="joinUrl" readonly>
             <button class="btn btn-ghost" id="copyBtn">Kopieren</button>
           </div>
+        </div>
+      </div>
+
+      <div id="qrModal" class="qr-modal hidden">
+        <div class="qr-modal-backdrop"></div>
+        <div class="qr-modal-content">
+          <button class="qr-modal-close" id="qrModalClose" aria-label="Schließen">×</button>
+          <canvas id="qrCanvasBig"></canvas>
+          <p class="qr-modal-hint">Zum Schließen antippen</p>
         </div>
       </div>
 
@@ -119,10 +142,34 @@
       $('sessionSection').classList.remove('hidden');
       $('questionDisplay').textContent = q;
       $('pinDisplay').textContent = data.pin;
-      const url = `${location.origin}${location.pathname.replace('index.php','')}join.php?id=${sessionId}`;
+      const url = `${location.origin}${location.pathname.replace(/index\.php|teacher\.php/,'')}join.php?id=${sessionId}`;
       $('joinUrl').value = url;
       QRCode.toCanvas($('qrCanvas'), url, { width: 240, margin: 2, color: { dark: '#1e1a4b', light: '#ffffff' } });
+      QRCode.toCanvas($('qrCanvasBig'), url, { width: 460, margin: 3, color: { dark: '#1e1a4b', light: '#ffffff' } });
       startPolling();
+    });
+
+    $('qrToggleBtn').addEventListener('click', () => {
+      $('qrModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeQrModal() {
+      $('qrModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    $('qrModalClose').addEventListener('click', closeQrModal);
+    $('qrModal').addEventListener('click', (e) => {
+      if (e.target === $('qrModal') || e.target.classList.contains('qr-modal-backdrop')) {
+        closeQrModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !$('qrModal').classList.contains('hidden')) {
+        closeQrModal();
+      }
     });
 
     $('copyBtn').addEventListener('click', () => {

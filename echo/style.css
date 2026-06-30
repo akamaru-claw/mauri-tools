@@ -679,3 +679,115 @@ textarea {
   .back-link { margin-left: 0; margin-top: 10px; width: auto; }
   header { flex-wrap: wrap; }
 }
+
+/* QR thumb next to pin */
+.pin-with-qr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.qr-thumb {
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: var(--amber-400);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 0 #d97706;
+  transition: transform .1s, box-shadow .15s, background .15s;
+}
+
+.qr-thumb:hover {
+  background: var(--amber-300);
+}
+
+.qr-thumb:active {
+  transform: translateY(4px) scale(0.97);
+  box-shadow: 0 1px 0 #d97706;
+}
+
+.qr-thumb svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* QR Modal */
+.qr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.qr-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 12, 36, 0.92);
+  backdrop-filter: blur(4px);
+}
+
+.qr-modal-content {
+  position: relative;
+  background: var(--warm-100);
+  border-radius: var(--radius);
+  padding: 34px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  max-width: 520px;
+  width: 100%;
+  animation: popIn .3s ease-out;
+}
+
+.qr-modal-content canvas {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border-radius: 18px;
+  background: #fff;
+  padding: 14px;
+}
+
+.qr-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 2.2rem;
+  color: var(--indigo-800);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transition: background .15s;
+}
+
+.qr-modal-close:hover {
+  background: rgba(30, 26, 75, 0.08);
+}
+
+.qr-modal-hint {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .qr-modal-content { padding: 24px 18px; }
+  .qr-modal-content canvas { padding: 10px; }
+  .qr-thumb { width: 46px; height: 46px; }
+  .qr-thumb svg { width: 28px; height: 28px; }
+}
