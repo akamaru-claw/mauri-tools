@@ -1,426 +1,533 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Mauri-Kickerinnen - Landesfinale 2026</title>
- <meta name="theme-color" content="#0f630e">
- <!-- Tailwind CSS für modernes, responsives Design -->
- <script src="https://cdn.tailwindcss.com"></script>
- <!-- FontAwesome für Icons -->
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
- <link rel="icon" type="image/svg+xml" href="logo.svg">
- <style>
- .insta-ring {
- background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
- }
- body {
- font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
- }
- </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mauri-Kickerinnen — Landesfinale 2026</title>
+  <meta name="theme-color" content="#0f630e">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+    :root {
+      --rasen: #0f630e;
+      --rasen-hell: #1a7a16;
+      --rasen-dunkel: #0a450a;
+      --linie: rgba(255,255,255,0.85);
+      --ball: #ffffff;
+      --marker-past: #22c55e;
+      --marker-now: #f59e0b;
+      --marker-future: #94a3b8;
+    }
+    body { font-family: 'Inter', sans-serif; background: #f0fdf4; }
+    h1, h2, h3, .title { font-family: 'Oswald', sans-serif; }
+    .pitch-bg {
+      background:
+        repeating-linear-gradient(90deg, transparent 0, transparent 49px, rgba(255,255,255,0.12) 50px),
+        repeating-linear-gradient(0deg, transparent 0, transparent 49px, rgba(255,255,255,0.12) 50px),
+        linear-gradient(135deg, #0f630e 0%, #146b10 50%, #0f630e 100%);
+    }
+    .pitch-card {
+      background: linear-gradient(180deg, #0f630e 0%, #0a450a 100%);
+      border: 2px solid rgba(255,255,255,0.6);
+      box-shadow: 0 10px 30px rgba(15,99,14,0.35), inset 0 0 60px rgba(255,255,255,0.04);
+    }
+    .center-circle {
+      border: 3px solid rgba(255,255,255,0.5);
+      border-radius: 50%;
+    }
+    .timeline-line {
+      position: absolute;
+      left: 2rem;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, var(--marker-past) 0%, var(--marker-past) var(--progress,0%), var(--marker-future) var(--progress,0%), var(--marker-future) 100%);
+      border-radius: 2px;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: 1.55rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 50%;
+      border: 3px solid white;
+      z-index: 10;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .dot-past { background: var(--marker-past); }
+    .dot-now { background: var(--marker-now); animation: pulse-dot 1.5s infinite; }
+    .dot-future { background: var(--marker-future); }
+    @keyframes pulse-dot {
+      0% { box-shadow: 0 0 0 0 rgba(245,158,11,0.5); }
+      70% { box-shadow: 0 0 0 12px rgba(245,158,11,0); }
+      100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); }
+    }
+    .match-card {
+      background: white;
+      border-left: 5px solid var(--rasen);
+    }
+    .match-card.past { opacity: 0.75; }
+    .match-card.now { border-left-color: var(--marker-now); box-shadow: 0 0 0 2px rgba(245,158,11,0.25); }
+    .match-card.future { opacity: 1; }
+    .score {
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 1px;
+    }
+    .grass-btn {
+      background: linear-gradient(180deg, #1a7a16 0%, #0f630e 100%);
+      border: 2px solid rgba(255,255,255,0.4);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .grass-btn:active { transform: translateY(1px); }
+    .admin-panel { display: none; }
+    .admin-active .admin-panel { display: block; }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-900 antialiased min-h-screen pb-12">
+<body class="text-gray-800">
 
- <!-- NAVIGATION BAR -->
- <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 px-4 py-2">
- <div class="max-w-4xl mx-auto flex justify-between items-center">
- <!-- Logo & Titel -->
- <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('feed')">
- <img src="logo.svg" alt="Mauritius-Gymnasium Logo" class="h-10 w-auto object-contain">
- <div class="hidden sm:block">
- <h1 class="font-bold text-lg leading-tight text-emerald-800">Mauritius-Gymnasium</h1>
- <p class="text-xs text-gray-500 font-semibold">Mädchen U17 • Landesfinale '26</p>
- </div>
- </div>
+  <!-- Hero / Pitch Header -->
+  <header class="pitch-bg text-white relative overflow-hidden">
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+      <svg width="260" height="260" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="20" stroke="white" stroke-width="1" fill="none"/>
+        <circle cx="50" cy="50" r="2" fill="white"/>
+      </svg>
+    </div>
+    <div class="relative max-w-4xl mx-auto px-4 py-8 md:py-12">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center space-x-3">
+          <img src="logo.svg" class="h-14 w-14 bg-white/10 rounded-full p-1.5 object-contain backdrop-blur-sm">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-widest text-emerald-100">Mauritius-Gymnasium Büren</p>
+            <h1 class="text-3xl md:text-5xl font-bold uppercase tracking-tight">Mauri-Kickerinnen</h1>
+          </div>
+        </div>
+        <button id="adminBtn" onclick="toggleAdmin()" class="bg-white/10 hover:bg-white/20 text-white text-xs md:text-sm font-bold px-3 py-2 rounded-lg backdrop-blur-sm border border-white/30">
+          <i class="fa-solid fa-lock mr-1"></i> Admin
+        </button>
+      </div>
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="inline-block bg-white text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded mb-2">Landesfinale NRW 2026</span>
+          <h2 class="text-2xl md:text-4xl font-bold">Mädchen U17 Fußball</h2>
+          <p class="text-emerald-100 mt-1 text-sm md:text-base"><i class="fa-solid fa-location-dot mr-1"></i> Sportschule Duisburg-Wedau</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs uppercase tracking-wider text-emerald-100">Mittwoch, 1. Juli 2026</p>
+          <p class="text-2xl font-bold title" id="live-clock">--:--</p>
+        </div>
+      </div>
+    </div>
+  </header>
 
- <!-- Tabs -->
- <div class="flex space-x-1 sm:space-x-4">
- <button id="btn-feed" onclick="switchTab('feed')" class="px-3 py-2 text-sm font-bold text-emerald-600 border-b-2 border-emerald-600">
- <i class="fa-solid fa-house mr-1"></i> Live-Feed
- </button>
- <button id="btn-schedule" onclick="switchTab('schedule')" class="px-3 py-2 text-sm font-semibold text-gray-500 hover:text-emerald-600 transition">
- <i class="fa-solid fa-calendar-days mr-1"></i> Ablauf &amp; Team
- </button>
- </div>
+  <!-- Live Status Banner -->
+  <section class="max-w-4xl mx-auto px-4 -mt-4 relative z-20">
+    <div id="live-status" class="bg-white rounded-xl shadow-lg border border-emerald-100 p-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div id="status-dot" class="w-3 h-3 rounded-full bg-emerald-500"></div>
+        <div>
+          <p class="text-xs text-gray-500 uppercase font-bold">Aktueller Status</p>
+          <p id="status-text" class="font-bold text-gray-800">Lade...</p>
+        </div>
+      </div>
+      <button onclick="showNow()" class="grass-btn px-4 py-2 rounded-lg text-sm font-bold">
+        <i class="fa-solid fa-crosshairs mr-1"></i> Zum Aktuellen
+      </button>
+    </div>
+  </section>
 
- <!-- Admin Toggle für Nele & Ida -->
- <div class="flex items-center bg-gray-100 rounded-full p-1 border border-gray-200">
- <button id="admin-toggle" onclick="toggleAdminMode()" class="text-xs font-bold px-3 py-1.5 rounded-full transition bg-white text-gray-700 shadow-sm">
- <i class="fa-solid fa-lock mr-1 text-gray-400"></i> Admin (Nele/Ida)
- </button>
- </div>
- </div>
- </nav>
+  <!-- Main Timeline -->
+  <main class="max-w-4xl mx-auto px-4 mt-8 pb-16">
+    <div class="relative" id="timeline">
+      <div class="timeline-line" id="timeline-line"></div>
 
- <!-- MAIN CONTAINER -->
- <main class="max-w-4xl mx-auto mt-6 px-4">
+      <!-- Event: Abfahrt -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T08:10">
+        <div class="timeline-dot dot-past"></div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <div class="flex justify-between items-start mb-2">
+            <span class="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">08:10 Uhr</span>
+            <i class="fa-solid fa-bus text-emerald-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900">Abfahrt ab Büren</h3>
+          <p class="text-sm text-gray-600 mt-1">Treffen an der Bushaltestelle „Alte Post“. Gemeinsame Fahrt mit dem Reismann-Gymnasium.</p>
+        </div>
+      </div>
 
- <!-- ================= FEED SEITE ================= -->
- <div id="page-feed" class="space-y-6">
+      <!-- Event: Ankunft -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T10:00">
+        <div class="timeline-dot dot-past"></div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <div class="flex justify-between items-start mb-2">
+            <span class="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">bis 10:00 Uhr</span>
+            <i class="fa-solid fa-map-location-dot text-emerald-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900">Ankunft in Duisburg</h3>
+          <p class="text-sm text-gray-600 mt-1">Sportschule Duisburg-Wedau, Friedrich-Alfred-Allee 15. Parkplätze P2–P4 (Busse P3). Kabinenbezug.</p>
+        </div>
+      </div>
 
- <!-- Story Bereich (Instagram Style) -->
- <div class="bg-white border border-gray-200 rounded-xl p-4 flex space-x-6 overflow-x-auto shadow-sm">
- <div class="flex flex-col items-center space-y-1 flex-shrink-0">
- <div class="p-[2px] rounded-full insta-ring">
- <div class="bg-white p-1 rounded-full">
- <img src="logo.svg" class="w-14 h-14 rounded-full bg-emerald-50 object-contain p-1">
- </div>
- </div>
- <span class="text-xs font-semibold">MauriU17</span>
- </div>
- <div class="flex flex-col items-center space-y-1 flex-shrink-0">
- <div class="p-[2px] rounded-full bg-gray-200">
- <div class="bg-white p-1 rounded-full">
- <div class="w-14 h-14 rounded-full bg-emerald-700 flex items-center justify-center text-white font-bold text-sm">CH</div>
- </div>
- </div>
- <span class="text-xs text-gray-500">Hr. Holtkamp</span>
- </div>
- <div class="flex flex-col items-center space-y-1 flex-shrink-0">
- <div class="p-[2px] rounded-full insta-ring">
- <div class="bg-white p-1 rounded-full">
- <div class="w-14 h-14 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold text-sm">N</div>
- </div>
- </div>
- <span class="text-xs font-semibold">Nele 📸</span>
- </div>
- <div class="flex flex-col items-center space-y-1 flex-shrink-0">
- <div class="p-[2px] rounded-full insta-ring">
- <div class="bg-white p-1 rounded-full">
- <div class="w-14 h-14 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold text-sm">I</div>
- </div>
- </div>
- <span class="text-xs font-semibold">Ida 📝</span>
- </div>
- </div>
+      <!-- Event: Betreuerbesprechung -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T10:30">
+        <div class="timeline-dot dot-past"></div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <div class="flex justify-between items-start mb-2">
+            <span class="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">10:30 Uhr</span>
+            <i class="fa-solid fa-clipboard-list text-emerald-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900">Besprechung der Betreuer</h3>
+          <p class="text-sm text-gray-600 mt-1">Waldhaus der Sportschule. Letzte Infos vor dem Turnierstart.</p>
+        </div>
+      </div>
 
- <!-- ADMIN ERSTELLEN MODUS (Standardmäßig versteckt) -->
- <div id="admin-panel" class="hidden bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-dashed border-emerald-300 rounded-xl p-4 shadow-sm">
- <div class="flex items-center space-x-2 text-emerald-800 font-bold mb-3">
- <i class="fa-solid fa-pen-to-square"></i>
- <h3>Neuer Live-Beitrag (Reporter-Modus)</h3>
- </div>
- <div class="space-y-3">
- <div>
- <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Autorin</label>
- <select id="post-author" class="w-full text-sm bg-white border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none">
- <option value="Nele">Nele (Reporterin)</option>
- <option value="Ida">Ida (Reporterin)</option>
- <option value="Team-Admin">Mauri-Kickerinnen Team</option>
- </select>
- </div>
- <div>
- <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Beschreibung / Text</label>
- <textarea id="post-text" rows="3" placeholder="Wie steht es? Was passiert gerade in Duisburg?..." class="w-full text-sm bg-white border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
- </div>
- <div>
- <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Bild-URL (Optional für echten Prototyp, sonst Platzhalter verwenden)</label>
- <input id="post-img" type="text" placeholder="https://images.unsplash.com/photo-..." class="w-full text-sm bg-white border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none">
- </div>
- <button onclick="createNewPost()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-2 px-4 rounded-lg transition shadow-sm">
- Beitrag im Schul-Feed veröffentlichen
- </button>
- </div>
- </div>
+      <!-- Event: Eröffnung -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T10:45">
+        <div class="timeline-dot dot-now"></div>
+        <div class="pitch-card rounded-xl p-5 text-white">
+          <div class="flex justify-between items-start mb-2">
+            <span class="bg-white/20 backdrop-blur text-white text-xs font-bold px-2 py-1 rounded border border-white/30">10:45 Uhr</span>
+            <i class="fa-solid fa-bullhorn text-white/80 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-bold uppercase">Eröffnung des Landesfinals</h3>
+          <p class="text-sm text-emerald-100 mt-1">Offizieller Startschuss des Sommer-Landesfinals NRW 2026. Begrüßung aller Teams.</p>
+        </div>
+      </div>
 
- <!-- LIVE FEED POSTS -->
- <div id="feed-container" class="space-y-6 max-w-xl mx-auto">
- <!-- Posts werden dynamisch via JS gerendert. Hier sind die vordefinierten Start-Posts -->
- </div>
+      <!-- Match 1 -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T11:00">
+        <div class="timeline-dot dot-future"></div>
+        <div class="match-card rounded-xl p-4 shadow-sm">
+          <div class="flex justify-between items-start mb-3">
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded">11:00 Uhr · KR1</span>
+            <span class="text-xs text-gray-400">Spiel 1 / 4</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 uppercase font-bold">Mauri U17</p>
+              <img src="logo.svg" class="h-12 w-12 mx-auto my-1 object-contain">
+              <p class="font-bold text-sm text-emerald-700">Büren</p>
+            </div>
+            <div class="px-4 text-center">
+              <p class="score text-3xl md:text-4xl font-bold text-gray-800 editable-score" data-match="1">- : -</p>
+              <p class="text-xs text-gray-400 mt-1">2 × 15 Min.</p>
+            </div>
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 uppercase font-bold">Gegner</p>
+              <div class="h-12 w-12 mx-auto my-1 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm">MR</div>
+              <p class="font-bold text-sm text-gray-700">Merian-Gymnasium Telgte</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
- </div>
+      <!-- Match 2 -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T12:00">
+        <div class="timeline-dot dot-future"></div>
+        <div class="match-card rounded-xl p-4 shadow-sm">
+          <div class="flex justify-between items-start mb-3">
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded">12:00 Uhr · KR1</span>
+            <span class="text-xs text-gray-400">Spiel 2 / 4</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 uppercase font-bold">Mauri U17</p>
+              <img src="logo.svg" class="h-12 w-12 mx-auto my-1 object-contain">
+              <p class="font-bold text-sm text-emerald-700">Büren</p>
+            </div>
+            <div class="px-4 text-center">
+              <p class="score text-3xl md:text-4xl font-bold text-gray-800 editable-score" data-match="2">- : -</p>
+              <p class="text-xs text-gray-400 mt-1">2 × 15 Min.</p>
+            </div>
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 uppercase font-bold">Gegner</p>
+              <div class="h-12 w-12 mx-auto my-1 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm">GR</div>
+              <p class="font-bold text-sm text-gray-700">Gymnasium Rodenkirchen Köln</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
- <!-- ================= ABLAUF & TOURNEY SEITE ================= -->
- <div id="page-schedule" class="hidden space-y-6">
+      <!-- Match 3 -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T13:00">
+        <div class="timeline-dot dot-future"></div>
+        <div class="match-card rounded-xl p-4 shadow-sm">
+          <div class="flex justify-between items-start mb-3">
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded">13:00 Uhr · KR1</span>
+            <span class="text-xs text-gray-400">Spiel 3 / 4</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 uppercase font-bold">Mauri U17</p>
+              <img src="logo.svg" class="h-12 w-12 mx-auto my-1 object-contain">
+              <p class="font-bold text-sm text-emerald-700">Büren</p>
+            </div>
+            <div class="px-4 text-center">
+              <p class="score text-3xl md:text-4xl font-bold text-gray-800 editable-score" data-match="3">- : -</p>
+              <p class="text-xs text-gray-400 mt-1">2 × 15 Min.</p>
+            </div>
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 uppercase font-bold">Gegner</p>
+              <div class="h-12 w-12 mx-auto my-1 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm">SS</div>
+              <p class="font-bold text-sm text-gray-700">Schiller-Schule Bochum</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
- <!-- Header Infobox -->
- <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
- <div>
- <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-2.5 py-1 rounded-full uppercase tracking-wider">Turnier-Dashboard</span>
- <h2 class="text-2xl font-bold text-gray-800 mt-2">Landesfinale NRW 2026 — Duisburg</h2>
- <p class="text-sm text-gray-500 mt-1"><i class="fa-solid fa-location-dot mr-1"></i> Sportschule Duisburg-Wedau (Kunstrasen 1 &amp; 2)</p>
- </div>
- <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg text-sm">
- <p class="font-bold text-emerald-800"><i class="fa-solid fa-user-shield mr-1"></i> Betreuung &amp; Leitung:</p>
- <ul class="list-disc list-inside text-gray-600 mt-1 text-xs space-y-0.5">
- <li>Christian Holtkamp</li>
- <li>Markus Radde</li>
- <li>Jordy Einhorn</li>
- </ul>
- </div>
- </div>
+      <!-- Match 4 -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T14:00">
+        <div class="timeline-dot dot-future"></div>
+        <div class="match-card rounded-xl p-4 shadow-sm">
+          <div class="flex justify-between items-start mb-3">
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded">14:00 Uhr · KR2</span>
+            <span class="text-xs text-gray-400">Spiel 4 / 4</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 uppercase font-bold">Mauri U17</p>
+              <img src="logo.svg" class="h-12 w-12 mx-auto my-1 object-contain">
+              <p class="font-bold text-sm text-emerald-700">Büren</p>
+            </div>
+            <div class="px-4 text-center">
+              <p class="score text-3xl md:text-4xl font-bold text-gray-800 editable-score" data-match="4">- : -</p>
+              <p class="text-xs text-gray-400 mt-1">2 × 15 Min.</p>
+            </div>
+            <div class="text-center flex-1">
+              <p class="text-xs text-gray-500 uppercase font-bold">Gegner</p>
+              <div class="h-12 w-12 mx-auto my-1 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm">HG</div>
+              <p class="font-bold text-sm text-gray-700">Helmholtz-Gymnasium Essen</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
- <!-- Grid für zwei Spalten: Tagesablauf & Spielplan -->
- <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Platzierungsspiele / Finale -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T15:00">
+        <div class="timeline-dot dot-future"></div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <div class="flex justify-between items-start mb-2">
+            <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded">15:00 Uhr</span>
+            <i class="fa-solid fa-medal text-amber-500 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900">Platzierungsspiele / Finale</h3>
+          <p class="text-sm text-gray-600 mt-1">Je nach Tabellenplatz: Halbfinale und Finalspiele um die Plätze 1–4.</p>
+        </div>
+      </div>
 
- <!-- Links: Tagesablauf Timeline -->
- <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm lg:col-span-5">
- <h3 class="font-bold text-lg text-gray-800 border-b pb-2 mb-4"><i class="fa-solid fa-clock text-emerald-600 mr-2"></i>Tagesablauf (Mittwoch, 01.07.)</h3>
- <div class="relative border-l-2 border-emerald-100 ml-2 pl-4 space-y-5">
- <div class="relative">
- <div class="absolute -left-[23px] top-1 bg-emerald-600 w-2.5 h-2.5 rounded-full"></div>
- <span class="text-xs font-bold text-emerald-700">08:10 Uhr</span>
- <p class="text-sm font-semibold text-gray-800">Treffen an der Bushaltestelle (Alte Post)</p>
- <p class="text-xs text-gray-500">Gemeinsame Abfahrt mit dem Reismann-Gymnasium</p>
- </div>
- <div class="relative">
- <div class="absolute -left-[23px] top-1 bg-gray-400 w-2.5 h-2.5 rounded-full"></div>
- <span class="text-xs font-bold text-gray-500">bis 10:00 Uhr</span>
- <p class="text-sm font-semibold text-gray-800">Anreise &amp; Kabinenbezug</p>
- <p class="text-xs text-gray-500">Sportschule Duisburg • Kabine 7</p>
- </div>
- <div class="relative">
- <div class="absolute -left-[23px] top-1 bg-gray-400 w-2.5 h-2.5 rounded-full"></div>
- <span class="text-xs font-bold text-gray-500">10:30 Uhr</span>
- <p class="text-sm font-semibold text-gray-800">Besprechung der Betreuer</p>
- <p class="text-xs text-gray-500">Ort: Waldhaus der Sportschule</p>
- </div>
- <div class="relative">
- <div class="absolute -left-[23px] top-1 bg-emerald-600 w-2.5 h-2.5 rounded-full"></div>
- <span class="text-xs font-bold text-emerald-700">11:00 - 15:30 Uhr</span>
- <p class="text-sm font-bold text-gray-800">Turnierspiele (Kunstrasen)</p>
- <p class="text-xs text-gray-500">4 garantierte Spiele auf Top-Niveau</p>
- </div>
- <div class="relative">
- <div class="absolute -left-[23px] top-1 bg-gray-400 w-2.5 h-2.5 rounded-full"></div>
- <span class="text-xs font-bold text-gray-500">16:30 Uhr</span>
- <p class="text-sm font-semibold text-gray-800">Offizielle Siegerehrung</p>
- <p class="text-xs text-gray-500">Leichtathletikstadion im Sportpark Duisburg</p>
- </div>
- <div class="relative">
- <div class="absolute -left-[23px] top-1 bg-emerald-600 w-2.5 h-2.5 rounded-full"></div>
- <span class="text-xs font-bold text-emerald-700">ca. 18:00 Uhr</span>
- <p class="text-sm font-semibold text-gray-800">Rückfahrt aus Duisburg</p>
- </div>
- <div class="relative">
- <div class="absolute -left-[23px] top-1 bg-emerald-700 w-2.5 h-2.5 rounded-full"></div>
- <span class="text-xs font-bold text-emerald-800">ca. 19:30 Uhr</span>
- <p class="text-sm font-bold text-emerald-800">Ankunft in Büren</p>
- <p class="text-xs text-red-500 font-semibold">⚠️ Rückfahrt ab Alte Post selbst organisieren!</p>
- </div>
- </div>
- </div>
+      <!-- Siegerehrung -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T16:30">
+        <div class="timeline-dot dot-future"></div>
+        <div class="pitch-card rounded-xl p-5 text-white">
+          <div class="flex justify-between items-start mb-2">
+            <span class="bg-white/20 backdrop-blur text-white text-xs font-bold px-2 py-1 rounded border border-white/30">16:30 Uhr</span>
+            <i class="fa-solid fa-trophy text-white/80 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-bold uppercase">Siegerehrung</h3>
+          <p class="text-sm text-emerald-100 mt-1">Leichtathletikstadion Duisburg-Wedau, Margaretenstr. 20. Zugang über Passageschleuse gegenüber Eisstadion.</p>
+        </div>
+      </div>
 
- <!-- Rechts: Spielplan & wichtige Packliste -->
- <div class="space-y-6 lg:col-span-7">
- <!-- Spielplan -->
- <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
- <div class="flex justify-between items-center border-b pb-2 mb-3">
- <h3 class="font-bold text-lg text-gray-800"><i class="fa-solid fa-trophy text-amber-500 mr-2"></i>Spielplan (Mädchen U17)</h3>
- <span class="text-xs bg-gray-100 px-2 py-1 rounded font-mono font-bold text-gray-600">Kunstrasen 1/2</span>
- </div>
- <div class="overflow-x-auto">
- <table class="w-full text-left text-sm text-gray-600">
- <thead class="bg-gray-50 text-xs uppercase font-bold text-gray-700">
- <tr>
- <th class="p-2">Zeit</th>
- <th class="p-2">Platz</th>
- <th class="p-2">Gegner</th>
- <th class="p-2 text-center">Ergebnis</th>
- </tr>
- </thead>
- <tbody class="divide-y divide-gray-100">
- <tr class="hover:bg-gray-50">
- <td class="p-2.5 font-semibold">11:00</td>
- <td class="p-2.5 text-xs text-gray-500">KR1</td>
- <td class="p-2.5 font-medium text-gray-900">Merian-Gymnasium Telgte</td>
- <td class="p-2.5 text-center font-bold text-emerald-600">- : -</td>
- </tr>
- <tr class="hover:bg-gray-50">
- <td class="p-2.5 font-semibold">12:00</td>
- <td class="p-2.5 text-xs text-gray-500">KR1</td>
- <td class="p-2.5 font-medium text-gray-900">Gymnasium Rodenkirchen Köln</td>
- <td class="p-2.5 text-center font-bold text-emerald-600">- : -</td>
- </tr>
- <tr class="hover:bg-gray-50">
- <td class="p-2.5 font-semibold">13:00</td>
- <td class="p-2.5 text-xs text-gray-500">KR1</td>
- <td class="p-2.5 font-medium text-gray-900">Schiller-Schule Bochum</td>
- <td class="p-2.5 text-center font-bold text-emerald-600">- : -</td>
- </tr>
- <tr class="hover:bg-gray-50">
- <td class="p-2.5 font-semibold">14:00</td>
- <td class="p-2.5 text-xs text-gray-500">KR2</td>
- <td class="p-2.5 font-medium text-gray-900">Helmholtz-Gymnasium Essen</td>
- <td class="p-2.5 text-center font-bold text-emerald-600">- : -</td>
- </tr>
- </tbody>
- </table>
- </div>
- </div>
+      <!-- Rückfahrt -->
+      <div class="relative pl-16 py-4 event" data-time="2026-07-01T18:00">
+        <div class="timeline-dot dot-future"></div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <div class="flex justify-between items-start mb-2">
+            <span class="bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded">ca. 18:00 Uhr</span>
+            <i class="fa-solid fa-bus text-emerald-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900">Rückfahrt</h3>
+          <p class="text-sm text-gray-600 mt-1">Abfahrt aus Duisburg. Ankunft in Büren ca. 19:30 Uhr — Weiterfahrt ab „Alte Post“ selbst organisieren.</p>
+        </div>
+      </div>
+    </div>
 
- <!-- Packliste & Wichtiges -->
- <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 shadow-sm">
- <h3 class="font-bold text-sm uppercase tracking-wide text-amber-800 mb-3"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Dringend Mitzubringen!</h3>
- <ul class="space-y-2 text-sm text-amber-900">
- <li class="flex items-center"><i class="fa-solid fa-id-card text-amber-600 mr-2 w-4 text-center"></i> Schülerausweis &amp; Personalausweis</li>
- <li class="flex items-center"><i class="fa-solid fa-shirt text-amber-600 mr-2 w-4 text-center"></i> Schwarze kurze Hose &amp; schwarze Stutzen</li>
- <li class="flex items-center"><i class="fa-solid fa-socks text-amber-600 mr-2 w-4 text-center"></i> Fußballschuhe für Kunstrasen</li>
- </ul>
- </div>
- </div>
+    <!-- Info Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+        <h3 class="font-bold text-amber-900 mb-2"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Packliste</h3>
+        <ul class="text-sm text-amber-900 space-y-1.5">
+          <li><i class="fa-solid fa-id-card text-amber-600 mr-2 w-4 text-center"></i>Schülerausweis + Personalausweis</li>
+          <li><i class="fa-solid fa-shirt text-amber-600 mr-2 w-4 text-center"></i>Schwarze kurze Hose + schwarze Stutzen</li>
+          <li><i class="fa-solid fa-socks text-amber-600 mr-2 w-4 text-center"></i>Fußballschuhe für Kunstrasen</li>
+          <li><i class="fa-solid fa-layer-group text-amber-600 mr-2 w-4 text-center"></i>Zwei verschiedenfarbige Trikotsätze</li>
+          <li><i class="fa-solid fa-futbol text-amber-600 mr-2 w-4 text-center"></i>Bälle zum Einspielen</li>
+        </ul>
+      </div>
+      <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+        <h3 class="font-bold text-emerald-900 mb-2"><i class="fa-solid fa-circle-info mr-1"></i> Wichtiges</h3>
+        <ul class="text-sm text-emerald-900 space-y-1.5">
+          <li><i class="fa-solid fa-clock text-emerald-600 mr-2 w-4 text-center"></i>Spielzeit: 2 × 15 Min., 5 Min. Pause</li>
+          <li><i class="fa-solid fa-car text-emerald-600 mr-2 w-4 text-center"></i>Parkplätze P2–P4, Busse P3</li>
+          <li><i class="fa-solid fa-train text-emerald-600 mr-2 w-4 text-center"></i>ÖPNV: S1 bis „Im Schlenk“, dann 15 Min. Fußweg</li>
+          <li><i class="fa-solid fa-ban-smoking text-emerald-600 mr-2 w-4 text-center"></i>Alkohol- und Nikotinkonsum verboten</li>
+        </ul>
+      </div>
+    </section>
 
- </div>
- </div>
+    <!-- Admin Panel -->
+    <section id="adminPanel" class="admin-panel mt-8 bg-white rounded-xl shadow-lg border-2 border-dashed border-emerald-400 p-5">
+      <h3 class="text-lg font-bold text-emerald-800 mb-4"><i class="fa-solid fa-user-shield mr-1"></i> Admin-Bereich (Nele / Ida)</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Aktuelle Uhrzeit simulieren</label>
+          <input type="datetime-local" id="adminTime" class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+        </div>
+        <div class="flex items-end">
+          <button onclick="applyAdminTime()" class="grass-btn w-full py-2 rounded-lg text-sm font-bold">Zeit anwenden</button>
+        </div>
+      </div>
+      <p class="text-xs text-gray-500 mb-4">Tipp: Ergebnisse direkt auf die Spielkarten klicken/tippen, um sie zu bearbeiten. Änderungen werden im Browser gespeichert.</p>
+    </section>
+  </main>
 
- </main>
+  <footer class="text-center text-xs text-gray-400 pb-8">
+    Mauritius-Gymnasium Büren • Mädchen U17 • Landesfinale NRW 2026
+  </footer>
 
- <!-- INTERAKTIVES JAVASCRIPT-LOGIK -->
- <script>
- // State management
- let isAdmin = false;
+  <script>
+    const events = Array.from(document.querySelectorAll('.event'));
+    const statusText = document.getElementById('status-text');
+    const statusDot = document.getElementById('status-dot');
+    const timelineLine = document.getElementById('timeline-line');
+    let adminMode = false;
+    let simulatedTime = null;
 
- // Startdaten für den Instagram Feed
- let initialPosts = [
- {
- id: 1,
- author: "Ida",
- time: "Vor 10 Minuten",
- text: "🚌 Auf geht's! Der Bus ist pünktlich an der Alten Post gestartet. Zusammen mit den Jungs vom Reismann-Gymnasium machen wir uns jetzt auf den Weg nach Duisburg. Stimmung ist mega! Drückt uns die Daumen! 🏆⚽ #MauriPower #RoadToBerlin",
- image: "https://images.unsplash.com/photo-1557223562-6c77ef16210f?auto=format&fit=crop&q=80&w=600"
- },
- {
- id: 2,
- author: "Team-Admin",
- time: "Gestern",
- text: "🔥 Das Landesfinale steht an! Nach harten Runden haben sich unsere Mauri-Kickerinnen für Duisburg qualifiziert. Morgen geht es gegen die stärksten Teams aus NRW (Bochum, Köln, Essen, Telgte). Bleibt hier über den Feed den ganzen Tag live dabei!",
- image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=600"
- }
- ];
+    const matchResults = JSON.parse(localStorage.getItem('mauri_scores_v1')) || {};
 
- // Funktion zum Wechseln zwischen Feed und Ablauf
- function switchTab(tab) {
- const feedPage = document.getElementById('page-feed');
- const schedulePage = document.getElementById('page-schedule');
- const btnFeed = document.getElementById('btn-feed');
- const btnSchedule = document.getElementById('btn-schedule');
+    function getCurrentTime() {
+      return simulatedTime ? new Date(simulatedTime) : new Date();
+    }
 
- if (tab === 'feed') {
- feedPage.classList.remove('hidden');
- schedulePage.classList.add('hidden');
- btnFeed.className = "px-3 py-2 text-sm font-bold text-emerald-600 border-b-2 border-emerald-600";
- btnSchedule.className = "px-3 py-2 text-sm font-semibold text-gray-500 hover:text-emerald-600 transition";
- } else {
- feedPage.classList.add('hidden');
- schedulePage.classList.remove('hidden');
- btnFeed.className = "px-3 py-2 text-sm font-semibold text-gray-500 hover:text-emerald-600 transition";
- btnSchedule.className = "px-3 py-2 text-sm font-bold text-emerald-600 border-b-2 border-emerald-600";
- }
- }
+    function updateClock() {
+      const now = getCurrentTime();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('live-clock').textContent = `${h}:${m}`;
+    }
 
- // Admin Modus umschalten
- function toggleAdminMode() {
- isAdmin = !isAdmin;
- const adminPanel = document.getElementById('admin-panel');
- const toggleBtn = document.getElementById('admin-toggle');
+    function updateTimeline() {
+      const now = getCurrentTime();
+      let activeIndex = -1;
+      events.forEach((ev, idx) => {
+        const t = new Date(ev.dataset.time);
+        const dot = ev.querySelector('.timeline-dot');
+        const card = ev.querySelector('div.bg-white, div.pitch-card, div.match-card');
+        ev.classList.remove('past', 'now', 'future');
+        dot.classList.remove('dot-past', 'dot-now', 'dot-future');
 
- if (isAdmin) {
- adminPanel.classList.remove('hidden');
- toggleBtn.className = "text-xs font-bold px-3 py-1.5 rounded-full transition bg-emerald-600 text-white shadow-sm";
- toggleBtn.innerHTML = `<i class="fa-solid fa-lock-open mr-1"></i> Admin Aktiv`;
- } else {
- adminPanel.classList.add('hidden');
- toggleBtn.className = "text-xs font-bold px-3 py-1.5 rounded-full transition bg-white text-gray-700 shadow-sm";
- toggleBtn.innerHTML = `<i class="fa-solid fa-lock mr-1 text-gray-400"></i> Admin (Nele/Ida)`;
- }
- }
+        if (now >= t) {
+          const next = events[idx + 1];
+          if (!next || now < new Date(next.dataset.time)) {
+            ev.classList.add('now');
+            dot.classList.add('dot-now');
+            activeIndex = idx;
+          } else {
+            ev.classList.add('past');
+            dot.classList.add('dot-past');
+          }
+        } else {
+          ev.classList.add('future');
+          dot.classList.add('dot-future');
+        }
+      });
 
- // Feed-Beiträge im Insta-Design rendern
- function renderFeed() {
- const container = document.getElementById('feed-container');
- container.innerHTML = "";
+      // Progress line
+      if (activeIndex >= 0) {
+        const total = events.length;
+        const pct = ((activeIndex + 0.5) / total) * 100;
+        timelineLine.style.setProperty('--progress', pct + '%');
+      } else if (now < new Date(events[0].dataset.time)) {
+        timelineLine.style.setProperty('--progress', '0%');
+      } else {
+        timelineLine.style.setProperty('--progress', '100%');
+      }
 
- initialPosts.forEach(post => {
- const postHtml = `
- <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
- <!-- Post Header -->
- <div class="flex justify-between items-center p-3 border-b border-gray-100">
- <div class="flex items-center space-x-2">
- <div class="w-8 h-8 rounded-full bg-emerald-800 text-white flex items-center justify-center font-bold text-xs">
- ${post.author.charAt(0)}
- </div>
- <div>
- <span class="font-bold text-sm text-gray-800">${post.author}</span>
- <span class="text-xs text-emerald-700 font-semibold">• Live-Reporter</span>
- </div>
- </div>
- <span class="text-xs text-gray-400">${post.time}</span>
- </div>
+      // Status text
+      const nowEvent = events.find((ev, idx) => {
+        const t = new Date(ev.dataset.time);
+        const next = events[idx + 1];
+        return now >= t && (!next || now < new Date(next.dataset.time));
+      });
 
- <!-- Post Bild -->
- <div class="bg-gray-100 aspect-video w-full flex items-center justify-center overflow-hidden">
- <img src="${post.image}" alt="Live Bild" class="w-full h-full object-cover">
- </div>
+      if (now < new Date(events[0].dataset.time)) {
+        statusText.textContent = 'Noch nicht gestartet';
+        statusDot.className = 'w-3 h-3 rounded-full bg-gray-400';
+      } else if (nowEvent) {
+        const title = nowEvent.querySelector('h3')?.textContent || 'Aktuell';
+        statusText.textContent = 'Jetzt: ' + title;
+        statusDot.className = 'w-3 h-3 rounded-full bg-amber-500 animate-pulse';
+      } else {
+        statusText.textContent = 'Veranstaltung beendet';
+        statusDot.className = 'w-3 h-3 rounded-full bg-emerald-600';
+      }
+    }
 
- <!-- Action Bar (Insta-Style) -->
- <div class="p-3 flex space-x-4 text-xl text-gray-700 border-b border-gray-50">
- <button onclick="likePost(this)" class="hover:text-red-500 transition"><i class="fa-regular fa-heart"></i></button>
- <button class="hover:text-emerald-600 transition"><i class="fa-regular fa-comment"></i></button>
- <button class="hover:text-blue-500 transition"><i class="fa-regular fa-paper-plane"></i></button>
- </div>
+    function showNow() {
+      const nowEl = document.querySelector('.event.now, .match-card.now')?.closest('.event');
+      if (nowEl) {
+        nowEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        document.getElementById('timeline').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
 
- <!-- Post Content -->
- <div class="p-3 space-y-1">
- <p class="text-sm text-gray-800">
- <span class="font-bold mr-1.5">${post.author}</span>${post.text}
- </p>
- </div>
- </div>
- `;
- container.innerHTML += postHtml;
- });
- }
+    function toggleAdmin() {
+      if (!adminMode) {
+        const pw = prompt('Admin-Passwort:');
+        if (pw !== 'mauri2026') return alert('Falsches Passwort.');
+      }
+      adminMode = !adminMode;
+      document.body.classList.toggle('admin-active', adminMode);
+      document.getElementById('adminBtn').innerHTML = adminMode
+        ? '<i class="fa-solid fa-lock-open mr-1"></i> Admin an'
+        : '<i class="fa-solid fa-lock mr-1"></i> Admin';
+      document.querySelectorAll('.editable-score').forEach(el => {
+        el.contentEditable = adminMode;
+        el.classList.toggle('bg-amber-100', adminMode);
+        el.classList.toggle('rounded', adminMode);
+        el.classList.toggle('px-2', adminMode);
+        el.classList.toggle('cursor-text', adminMode);
+      });
+    }
 
- // Neuen Beitrag abschicken (Admin-Aktion)
- function createNewPost() {
- const author = document.getElementById('post-author').value;
- const text = document.getElementById('post-text').value;
- let img = document.getElementById('post-img').value;
+    function applyAdminTime() {
+      const val = document.getElementById('adminTime').value;
+      if (!val) {
+        simulatedTime = null;
+      } else {
+        simulatedTime = new Date(val).toISOString();
+      }
+      updateClock();
+      updateTimeline();
+    }
 
- if (!text.trim()) {
- alert("Bitte gib einen Text für den Beitrag ein!");
- return;
- }
+    function saveScores() {
+      document.querySelectorAll('.editable-score').forEach(el => {
+        matchResults[el.dataset.match] = el.textContent.trim();
+      });
+      localStorage.setItem('mauri_scores_v1', JSON.stringify(matchResults));
+    }
 
- // Fallback Bild falls keins eingetragen wurde
- if (!img.trim()) {
- img = "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=600";
- }
+    function loadScores() {
+      Object.entries(matchResults).forEach(([k, v]) => {
+        const el = document.querySelector(`.editable-score[data-match="${k}"]`);
+        if (el && v && v !== '- : -') el.textContent = v;
+      });
+    }
 
- const newPost = {
- id: initialPosts.length + 1,
- author: author + " ✨",
- time: "Gerade eben",
- text: text,
- image: img
- };
+    document.querySelectorAll('.editable-score').forEach(el => {
+      el.addEventListener('blur', saveScores);
+      el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } });
+    });
 
- // Vorne an das Array anfügen, damit es oben im Feed steht
- initialPosts.unshift(newPost);
-
- // Felder leeren und Feed neu rendern
- document.getElementById('post-text').value = "";
- document.getElementById('post-img').value = "";
- renderFeed();
-
- // Nutzer sanft nach unten zum aktualisierten Feed scrollen
- window.scrollTo({ top: 300, behavior: 'smooth' });
- }
-
- // Kleine Spielerei: Like Button funktionen
- function likePost(btn) {
- const icon = btn.querySelector('i');
- if (icon.classList.contains('fa-regular')) {
- icon.className = "fa-solid fa-heart text-red-500 animate-pulse";
- } else {
- icon.className = "fa-regular fa-heart";
- }
- }
-
- // Initialisierung beim Laden der Seite
- window.onload = function() {
- renderFeed();
- };
- </script>
+    // Init
+    loadScores();
+    setInterval(() => { updateClock(); updateTimeline(); }, 30000);
+    updateClock();
+    updateTimeline();
+  </script>
 </body>
 </html>
