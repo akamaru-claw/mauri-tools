@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mauri-Kickerinnen - Landesfinale 2026</title>
+  <meta name="theme-color" content="#0f630e">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <style>
+    .insta-ring {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .like-anim { animation: pop 0.25s ease; }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+    .story-ring-off { background: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased min-h-screen pb-12">
+
+  <!-- NAVIGATION BAR -->
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 px-4 py-2">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('feed')">
+        <img src="logo.svg" alt="Mauritius-Gymnasium Logo" class="h-10 w-auto object-contain">
+        <div class="hidden sm:block">
+          <h1 class="font-bold text-lg leading-tight text-emerald-800">Mauritius-Gymnasium</h1>
+          <p class="text-xs text-gray-500 font-semibold">Mädchen U17 • Landesfinale '26</p>
+        </div>
+      </div>
+
+      <div class="flex space-x-1 sm:space-x-4">
+        <button id="btn-feed" onclick="switchTab('feed')" class="px-3 py-2 text-sm font-bold text-emerald-600 border-b-2 border-emerald-600">
+          <i class="fa-solid fa-house mr-1"></i> <span class="hidden sm:inline">Live-Feed</span><span class="sm:hidden">Feed</span>
+        </button>
+        <button id="btn-schedule" onclick="switchTab('schedule')" class="px-3 py-2 text-sm font-semibold text-gray-500 hover:text-emerald-600 transition">
+          <i class="fa-solid fa-calendar-days mr-1"></i> <span class="hidden sm:inline">Ablauf &amp; Team</span><span class="sm:hidden">Ablauf</span>
+        </button>
+      </div>
+
+      <div class="flex items-center bg-gray-100 rounded-full p-1 border border-gray-200">
+        <button id="admin-toggle" onclick="toggleAdminMode()" class="text-xs font-bold px-3 py-1.5 rounded-full transition bg-white text-gray-700 shadow-sm">
+          <i class="fa-solid fa-lock mr-1 text-gray-400"></i> <span class="hidden sm:inline">Admin (Nele/Ida)</span><span class="sm:hidden">Admin</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-4xl mx-auto mt-6 px-4">
+
+    <!-- ================= FEED SEITE ================= -->
+    <div id="page-feed" class="space-y-6">
+
+      <!-- Story Bereich -->
+      <div class="bg-white border border-gray-200 rounded-xl p-4 flex space-x-6 overflow-x-auto shadow-sm">
+        <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+          <div class="p-[2px] rounded-full insta-ring">
+            <div class="bg-white p-1 rounded-full">
+              <img src="logo.svg" class="w-14 h-14 rounded-full bg-emerald-50 object-contain p-1">
+            </div>
+          </div>
+          <span class="text-xs font-semibold">MauriU17</span>
+        </div>
+        <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+          <div class="p-[2px] rounded-full story-ring-off">
+            <div class="bg-white p-1 rounded-full">
+              <div class="w-14 h-14 rounded-full bg-emerald-700 flex items-center justify-center text-white font-bold text-sm">CH</div>
+            </div>
+          </div>
+          <span class="text-xs text-gray-500">Hr. Holtkamp</span>
+        </div>
+        <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+          <div class="p-[2px] rounded-full insta-ring">
+            <div class="bg-white p-1 rounded-full">
+              <div class="w-14 h-14 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold text-sm">N</div>
+            </div>
+          </div>
+          <span class="text-xs font-semibold">Nele 📸</span>
+        </div>
+        <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+          <div class="p-[2px] rounded-full insta-ring">
+            <div class="bg-white p-1 rounded-full">
+              <div class="w-14 h-14 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold text-sm">I</div>
+            </div>
+          </div>
+          <span class="text-xs font-semibold">Ida 📝</span>
+        </div>
+      </div>
+
+      <!-- ADMIN PANEL -->
+      <div id="admin-panel" class="hidden bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-dashed border-emerald-300 rounded-xl p-4 shadow-sm">
+        <div class="flex items-center space-x-2 text-emerald-800 font-bold mb-3">
+          <i class="fa-solid fa-pen-to-square"></i>
+          <h3>Neuer Live-Beitrag (Reporter-Modus)</h3>
+        </div>
+        <div class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Autorin</label>
+            <select id="post-author" class="w-full text-sm bg-white border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+              <option value="Nele">Nele (Reporterin)</option>
+              <option value="Ida">Ida (Reporterin)</option>
+              <option value="Team-Admin">Mauri-Kickerinnen Team</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Beschreibung / Text</label>
+            <textarea id="post-text" rows="3" placeholder="Wie steht es? Was passiert gerade in Duisburg?..." class="w-full text-sm bg-white border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Bild-URL (Optional)</label>
+            <input id="post-img" type="text" placeholder="https://..." class="w-full text-sm bg-white border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+          </div>
+          <button onclick="createNewPost()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-2 px-4 rounded-lg transition shadow-sm">
+            Beitrag im Schul-Feed veröffentlichen
+          </button>
+        </div>
+      </div>
+
+      <!-- LIVE FEED POSTS -->
+      <div id="feed-container" class="space-y-6 max-w-xl mx-auto">
+      </div>
+
+    </div>
+
+    <!-- ================= ABLAUF & TOURNEY SEITE ================= -->
+    <div id="page-schedule" class="hidden space-y-6">
+
+      <!-- Header Infobox -->
+      <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+        <div>
+          <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-2.5 py-1 rounded-full uppercase tracking-wider">Turnier-Dashboard</span>
+          <h2 class="text-2xl font-bold text-gray-800 mt-2">Landesfinale NRW 2026 — Duisburg</h2>
+          <p class="text-sm text-gray-500 mt-1"><i class="fa-solid fa-location-dot mr-1"></i> Sportschule Duisburg-Wedau (Kunstrasen 1 &amp; 2)</p>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg text-sm">
+          <p class="font-bold text-emerald-800"><i class="fa-solid fa-user-shield mr-1"></i> Betreuung &amp; Leitung:</p>
+          <ul class="list-disc list-inside text-gray-600 mt-1 text-xs space-y-0.5">
+            <li>Christian Holtkamp</li>
+            <li>Markus Radde</li>
+            <li>Jordy Einhorn</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Links: Tagesablauf -->
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm lg:col-span-5">
+          <h3 class="font-bold text-lg text-gray-800 border-b pb-2 mb-4"><i class="fa-solid fa-clock text-emerald-600 mr-2"></i>Tagesablauf (Mittwoch, 01.07.)</h3>
+          <div class="relative border-l-2 border-emerald-100 ml-2 pl-4 space-y-5">
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 bg-emerald-600 w-2.5 h-2.5 rounded-full"></div>
+              <span class="text-xs font-bold text-emerald-700">08:10 Uhr</span>
+              <p class="text-sm font-semibold text-gray-800">Treffen an der Bushaltestelle (Alte Post)</p>
+              <p class="text-xs text-gray-500">Gemeinsame Abfahrt mit dem Reismann-Gymnasium</p>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 bg-gray-400 w-2.5 h-2.5 rounded-full"></div>
+              <span class="text-xs font-bold text-gray-500">bis 10:00 Uhr</span>
+              <p class="text-sm font-semibold text-gray-800">Anreise &amp; Kabinenbezug</p>
+              <p class="text-xs text-gray-500">Sportschule Duisburg • Kabine 7</p>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 bg-gray-400 w-2.5 h-2.5 rounded-full"></div>
+              <span class="text-xs font-bold text-gray-500">10:30 Uhr</span>
+              <p class="text-sm font-semibold text-gray-800">Besprechung der Betreuer</p>
+              <p class="text-xs text-gray-500">Ort: Waldhaus der Sportschule</p>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 bg-emerald-600 w-2.5 h-2.5 rounded-full"></div>
+              <span class="text-xs font-bold text-emerald-700">11:00 - 15:30 Uhr</span>
+              <p class="text-sm font-bold text-gray-800">Turnierspiele (Kunstrasen)</p>
+              <p class="text-xs text-gray-500">4 garantierte Spiele auf Top-Niveau</p>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 bg-gray-400 w-2.5 h-2.5 rounded-full"></div>
+              <span class="text-xs font-bold text-gray-500">16:30 Uhr</span>
+              <p class="text-sm font-semibold text-gray-800">Offizielle Siegerehrung</p>
+              <p class="text-xs text-gray-500">Leichtathletikstadion im Sportpark Duisburg</p>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 bg-emerald-600 w-2.5 h-2.5 rounded-full"></div>
+              <span class="text-xs font-bold text-emerald-700">ca. 18:00 Uhr</span>
+              <p class="text-sm font-semibold text-gray-800">Rückfahrt aus Duisburg</p>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 bg-emerald-700 w-2.5 h-2.5 rounded-full"></div>
+              <span class="text-xs font-bold text-emerald-800">ca. 19:30 Uhr</span>
+              <p class="text-sm font-bold text-emerald-800">Ankunft in Büren</p>
+              <p class="text-xs text-red-500 font-semibold">⚠️ Rückfahrt ab Alte Post selbst organisieren!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rechts: Spielplan & Packliste -->
+        <div class="space-y-6 lg:col-span-7">
+          <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+            <div class="flex justify-between items-center border-b pb-2 mb-3">
+              <h3 class="font-bold text-lg text-gray-800"><i class="fa-solid fa-trophy text-amber-500 mr-2"></i>Spielplan (Mädchen U17)</h3>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded font-mono font-bold text-gray-600">Kunstrasen 1/2</span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm text-gray-600">
+                <thead class="bg-gray-50 text-xs uppercase font-bold text-gray-700">
+                  <tr>
+                    <th class="p-2">Zeit</th>
+                    <th class="p-2">Platz</th>
+                    <th class="p-2">Gegner</th>
+                    <th class="p-2 text-center">Ergebnis</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100" id="match-table-body">
+                  <tr class="hover:bg-gray-50">
+                    <td class="p-2.5 font-semibold">11:00</td>
+                    <td class="p-2.5 text-xs text-gray-500">KR1</td>
+                    <td class="p-2.5 font-medium text-gray-900">Merian-Gymnasium Telgte</td>
+                    <td class="p-2.5 text-center font-bold text-emerald-600 editable-score" contenteditable="false" data-match="1">- : -</td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="p-2.5 font-semibold">12:00</td>
+                    <td class="p-2.5 text-xs text-gray-500">KR1</td>
+                    <td class="p-2.5 font-medium text-gray-900">Gymnasium Rodenkirchen Köln</td>
+                    <td class="p-2.5 text-center font-bold text-emerald-600 editable-score" contenteditable="false" data-match="2">- : -</td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="p-2.5 font-semibold">13:30</td>
+                    <td class="p-2.5 text-xs text-gray-500">KR2</td>
+                    <td class="p-2.5 font-medium text-gray-900">ALG Bochum</td>
+                    <td class="p-2.5 text-center font-bold text-emerald-600 editable-score" contenteditable="false" data-match="3">- : -</td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td class="p-2.5 font-semibold">14:30</td>
+                    <td class="p-2.5 text-xs text-gray-500">KR2</td>
+                    <td class="p-2.5 font-medium text-gray-900">Franz Sales Schule Essen</td>
+                    <td class="p-2.5 text-center font-bold text-emerald-600 editable-score" contenteditable="false" data-match="4">- : -</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-xs text-gray-400 mt-2 italic">* Finale/Platzierungsspiele je nach Gruppenplatzierung</p>
+          </div>
+
+          <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+            <h3 class="font-bold text-lg text-gray-800 border-b pb-2 mb-3"><i class="fa-solid fa-suitcase text-emerald-600 mr-2"></i>Packliste</h3>
+            <ul class="space-y-2 text-sm text-gray-700">
+              <li class="flex items-start"><i class="fa-solid fa-id-card text-emerald-600 mr-2 mt-0.5"></i><span><strong>Schülerausweis</strong> und <strong>Personalausweis</strong></span></li>
+              <li class="flex items-start"><i class="fa-solid fa-shirt text-emerald-600 mr-2 mt-0.5"></i><span>Schwarze kurze Hose und <strong>schwarze Stutzen</strong></span></li>
+              <li class="flex items-start"><i class="fa-solid fa-shoe-prints text-emerald-600 mr-2 mt-0.5"></i><span>Fußballschuhe für <strong>Kunstrasen</strong></span></li>
+              <li class="flex items-start"><i class="fa-solid fa-bottle-water text-emerald-600 mr-2 mt-0.5"></i><span>Getränke und Snacks für die Fahrt</span></li>
+              <li class="flex items-start"><i class="fa-solid fa-mobile-screen text-emerald-600 mr-2 mt-0.5"></i><span>Handy &amp; Ladegerät</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="max-w-4xl mx-auto mt-10 px-4 text-center text-xs text-gray-400 pb-8">
+    <p>Ein Projekt des Mauritius-Gymnasiums Büren • Landesfinale Mädchen U17 NRW 2026</p>
+  </footer>
+
+  <script>
+    // State
+    let adminMode = false;
+    let posts = JSON.parse(localStorage.getItem('mauri_posts_v1')) || [
+      {
+        id: 1,
+        author: 'Mauri-Kickerinnen Team',
+        avatar: 'logo.svg',
+        time: 'Vor 2 Tagen',
+        text: '🏆 Landesfinale NRW 2026! Am Mittwoch geht es nach Duisburg. Wir freuen uns auf 4 spannende Spiele gegen Telgte, Köln, Bochum und Essen. Lasst uns gemeinsam mitfiebern!',
+        image: '',
+        likes: 42,
+        liked: false
+      },
+      {
+        id: 2,
+        author: 'Christian Holtkamp',
+        avatar: 'CH',
+        time: 'Vor 1 Tag',
+        text: 'Wichtig: Treffen ist um 08:10 Uhr an der Bushaltestelle Alte Post. Bitte Schülerausweis + Personalausweis, schwarze Hose, schwarze Stutzen und Kunstrasen-Schuhe mitbringen!',
+        image: '',
+        likes: 28,
+        liked: false
+      },
+      {
+        id: 3,
+        author: 'Nele',
+        avatar: 'N',
+        time: 'Vor 5 Stunden',
+        text: '📸 Medien-Update: Ich begleite den Tag mit Fotos, Videos und Stories für die Homepage und Insta. Wünsche allen viel Erfolg!',
+        image: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=800&q=80',
+        likes: 35,
+        liked: false
+      }
+    ];
+
+    function savePosts() {
+      localStorage.setItem('mauri_posts_v1', JSON.stringify(posts));
+    }
+
+    function getAvatarHtml(avatar) {
+      if (avatar === 'logo.svg') return `<img src="logo.svg" class="w-10 h-10 rounded-full bg-emerald-50 object-contain p-1">`;
+      return `<div class="w-10 h-10 rounded-full bg-emerald-700 flex items-center justify-center text-white font-bold text-sm">${avatar}</div>`;
+    }
+
+    function renderFeed() {
+      const container = document.getElementById('feed-container');
+      container.innerHTML = '';
+      posts.slice().reverse().forEach(post => {
+        const imgHtml = post.image ? `<div class="mt-3 rounded-lg overflow-hidden border border-gray-100"><img src="${post.image}" alt="Beitragsbild" class="w-full h-auto object-cover max-h-[500px]"></div>` : '';
+        const deleteHtml = adminMode ? `<button onclick="deletePost(${post.id})" class="ml-auto text-red-500 hover:text-red-700 text-xs font-bold"><i class="fa-solid fa-trash mr-1"></i>Löschen</button>` : '';
+        const likeClass = post.liked ? 'fa-solid text-red-500' : 'fa-regular text-gray-600';
+        const html = `
+          <article class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+            <div class="p-3 flex items-center space-x-3 border-b border-gray-100">
+              ${getAvatarHtml(post.avatar)}
+              <div class="flex-1">
+                <p class="text-sm font-bold text-gray-800">${post.author}</p>
+                <p class="text-xs text-gray-400">${post.time}</p>
+              </div>
+              ${deleteHtml}
+            </div>
+            <div class="p-4">
+              <p class="text-sm text-gray-800 whitespace-pre-line">${post.text}</p>
+              ${imgHtml}
+              <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                <button onclick="toggleLike(${post.id})" class="flex items-center space-x-1 text-sm font-semibold group">
+                  <i class="${likeClass} text-lg group-hover:scale-110 transition ${post.liked ? 'like-anim' : ''}"></i>
+                  <span class="${post.liked ? 'text-red-500' : 'text-gray-600'}">${post.likes}</span>
+                </button>
+                <span class="text-xs text-gray-400"><i class="fa-regular fa-comment mr-1"></i>Kommentare via MauriU17</span>
+              </div>
+            </div>
+          </article>
+        `;
+        container.innerHTML += html;
+      });
+    }
+
+    function createNewPost() {
+      const author = document.getElementById('post-author').value;
+      const text = document.getElementById('post-text').value.trim();
+      const img = document.getElementById('post-img').value.trim();
+      if (!text) return alert('Bitte einen Text eingeben.');
+      const avatarMap = { 'Nele': 'N', 'Ida': 'I', 'Team-Admin': 'logo.svg' };
+      posts.push({
+        id: Date.now(),
+        author: author,
+        avatar: avatarMap[author] || 'logo.svg',
+        time: 'Gerade eben',
+        text: text,
+        image: img,
+        likes: 0,
+        liked: false
+      });
+      document.getElementById('post-text').value = '';
+      document.getElementById('post-img').value = '';
+      savePosts();
+      renderFeed();
+    }
+
+    function deletePost(id) {
+      if (!confirm('Beitrag wirklich löschen?')) return;
+      posts = posts.filter(p => p.id !== id);
+      savePosts();
+      renderFeed();
+    }
+
+    function toggleLike(id) {
+      const post = posts.find(p => p.id === id);
+      if (!post) return;
+      if (post.liked) {
+        post.likes--;
+        post.liked = false;
+      } else {
+        post.likes++;
+        post.liked = true;
+      }
+      savePosts();
+      renderFeed();
+    }
+
+    function toggleAdminMode() {
+      if (!adminMode) {
+        const pw = prompt('Admin-Passwort eingeben (für Demo: mauri2026):');
+        if (pw !== 'mauri2026') {
+          alert('Falsches Passwort.');
+          return;
+        }
+      }
+      adminMode = !adminMode;
+      const btn = document.getElementById('admin-toggle');
+      const panel = document.getElementById('admin-panel');
+      if (adminMode) {
+        btn.classList.add('bg-emerald-600', 'text-white');
+        btn.classList.remove('bg-white', 'text-gray-700');
+        btn.innerHTML = '<i class="fa-solid fa-lock-open mr-1"></i> Admin an';
+        panel.classList.remove('hidden');
+      } else {
+        btn.classList.remove('bg-emerald-600', 'text-white');
+        btn.classList.add('bg-white', 'text-gray-700');
+        btn.innerHTML = '<i class="fa-solid fa-lock mr-1 text-gray-400"></i> Admin (Nele/Ida)';
+        panel.classList.add('hidden');
+      }
+      renderFeed();
+    }
+
+    function switchTab(tab) {
+      document.getElementById('page-feed').classList.add('hidden');
+      document.getElementById('page-schedule').classList.add('hidden');
+      document.getElementById('page-' + tab).classList.remove('hidden');
+
+      document.getElementById('btn-feed').className = tab === 'feed'
+        ? 'px-3 py-2 text-sm font-bold text-emerald-600 border-b-2 border-emerald-600'
+        : 'px-3 py-2 text-sm font-semibold text-gray-500 hover:text-emerald-600 transition';
+      document.getElementById('btn-schedule').className = tab === 'schedule'
+        ? 'px-3 py-2 text-sm font-bold text-emerald-600 border-b-2 border-emerald-600'
+        : 'px-3 py-2 text-sm font-semibold text-gray-500 hover:text-emerald-600 transition';
+    }
+
+    // Init
+    renderFeed();
+  </script>
+</body>
+</html>

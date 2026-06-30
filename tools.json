@@ -8,6 +8,14 @@
     "tags": ["Feedback", "Schule", "Anonym", "Tablet"]
   },
   {
+    "id": "fussball-landesfinale",
+    "name": "Mauri-Kickerinnen Landesfinale",
+    "description": "Instagram-ähnlicher Live-Feed für das NRW-Landesfinale Duisburg 2026. Mit Ablauf, Team und Admin-Modus.",
+    "path": "fussball-landesfinale/",
+    "icon": "⚽",
+    "tags": ["Sport", "Schule", "Landesfinale", "Live-Feed"]
+  },
+  {
     "id": "video-delay",
     "name": "Video Delay",
     "description": "Verzögerte Wiedergabe für Sport-Training und Bewegungsanalyse.",
