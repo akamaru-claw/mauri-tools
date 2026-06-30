@@ -85,7 +85,9 @@
         opts.headers = { 'Content-Type': 'application/json' };
         opts.body = JSON.stringify(body);
       }
-      const res = await fetch(`${API}?action=${action}${sessionId && action !== 'create' ? '&id=' + sessionId : ''}`, opts);
+      let url = `${API}?action=${action}`;
+      if (sessionId && action !== 'create') url += `&id=${sessionId}`;
+      const res = await fetch(url, opts);
       return res.json();
     }
 

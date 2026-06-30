@@ -90,15 +90,16 @@ try {
         if (!$session) {
             safeJson(['error' => 'Session nicht gefunden.']);
         }
+        $resolvedId = $session['id'];
         $responses = [];
         $live = (bool)$session['live'];
         if ($live) {
             $stmt = $pdo->prepare("SELECT id, text, created_at FROM responses WHERE session_id = ? ORDER BY created_at DESC");
-            $stmt->execute([$id]);
+            $stmt->execute([$resolvedId]);
             $responses = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         safeJson([
-            'id' => $session['id'],
+            'id' => $resolvedId,
             'pin' => $session['pin'],
             'question' => $session['question'],
             'live' => $live,
