@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0f630e">
   <title>Mauri Echo – Anonymes Klassenfeedback</title>
-  <link rel="stylesheet" href="style.css?v=4">
-  <link rel="manifest" href="manifest.json?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="manifest" href="manifest.json?v=5">
   <link rel="icon" type="image/svg+xml" href="logo.svg">
 </head>
 <body>
   <div class="soundwave"></div>
   <div class="app app-center">
     <header class="header-landing">
-      <div class="logo logo-lg" aria-hidden="true">
+      <div class="logo logo-xl" aria-hidden="true">
         <img src="logo.svg" alt="Mauri Echo Logo" class="logo-img">
       </div>
       <div class="headline-stack">
@@ -46,8 +46,8 @@
       </div>
 
       <div class="school-badge">
-        <span class="school-label">Ein Projekt für</span>
         <img src="school_logo.svg" alt="Schullogo" class="school-logo-img">
+        <span class="school-label">Ein Projekt für die Schule</span>
       </div>
 
       <ul class="feature-list">

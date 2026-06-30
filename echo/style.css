@@ -68,9 +68,9 @@ header {
 }
 
 .logo {
-  width: 60px;
-  height: 60px;
-  border-radius: 18px;
+  width: 80px;
+  height: 80px;
+  border-radius: 22px;
   background: var(--warm-100);
   display: grid;
   place-items: center;
@@ -560,6 +560,16 @@ textarea {
   border-radius: 26px;
 }
 
+.logo-xl {
+  width: 140px;
+  height: 140px;
+  border-radius: 34px;
+}
+
+.logo-xl .logo-img {
+  padding: 16px;
+}
+
 .logo-lg svg {
   width: 64px;
   height: 64px;
@@ -810,9 +820,9 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin-top: 8px;
-  padding: 14px;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 16px;
   background: rgba(15, 99, 14, 0.06);
   border-radius: var(--radius-sm);
 }
@@ -824,7 +834,9 @@ textarea {
 }
 
 .school-logo-img {
-  max-width: 180px;
-  max-height: 70px;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  min-height: 50px;
   object-fit: contain;
 }
