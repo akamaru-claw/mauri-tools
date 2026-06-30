@@ -1,24 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
-  --indigo-900: #1e1a4b;
-  --indigo-800: #2d2668;
-  --indigo-700: #3d348b;
-  --indigo-600: #4f46a3;
+  --green-900: #0a4609;
+  --green-800: #0f630e;
+  --green-700: #148213;
+  --green-600: #1a9d18;
+  --green-100: #e9f7e9;
+  --green-50: #f4fbf4;
   --amber-400: #fbbf24;
   --amber-300: #fcd34d;
   --amber-200: #fde68a;
-  --warm-100: #fff9ed;
-  --warm-200: #fff3d6;
-  --text: #1e1a4b;
+  --warm-100: #f4fbf4;
+  --warm-200: #e9f7e9;
+  --text: #0a4609;
   --text-light: #ffffff;
-  --muted: #6b668a;
+  --muted: #5a8a59;
   --danger: #e11d48;
   --success: #16a34a;
   --radius: 22px;
   --radius-sm: 14px;
-  --shadow: 0 12px 40px rgba(30, 26, 75, 0.18);
-  --shadow-soft: 0 6px 20px rgba(30, 26, 75, 0.12);
+  --shadow: 0 12px 40px rgba(10, 70, 9, 0.18);
+  --shadow-soft: 0 6px 20px rgba(10, 70, 9, 0.12);
 }
 
 * {
@@ -29,7 +31,7 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: var(--indigo-900);
+  background: var(--green-900);
   color: var(--text-light);
   font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -43,8 +45,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 20% 10%, rgba(251, 191, 36, 0.12) 0%, transparent 35%),
-    radial-gradient(circle at 85% 75%, rgba(79, 70, 163, 0.25) 0%, transparent 40%);
+    radial-gradient(circle at 20% 10%, rgba(26, 157, 24, 0.12) 0%, transparent 35%),
+    radial-gradient(circle at 85% 75%, rgba(15, 99, 14, 0.25) 0%, transparent 40%);
   z-index: -1;
 }
 
@@ -102,7 +104,7 @@ h1 {
 
 /* Cards */
 .card {
-  background: var(--indigo-800);
+  background: var(--green-800);
   border-radius: var(--radius);
   padding: 26px;
   box-shadow: var(--shadow);
@@ -170,7 +172,7 @@ textarea {
 
 .btn-primary {
   background: var(--amber-400);
-  color: var(--indigo-900);
+  color: var(--green-900);
   box-shadow: 0 6px 0 #d97706;
 }
 
@@ -246,7 +248,7 @@ textarea {
 }
 
 .pin-box .label {
-  color: var(--indigo-700);
+  color: var(--green-700);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -257,7 +259,7 @@ textarea {
   font-size: clamp(3rem, 8vw, 4.6rem);
   font-weight: 800;
   letter-spacing: 0.14em;
-  color: var(--indigo-900);
+  color: var(--green-900);
   font-family: 'Space Grotesk', ui-monospace, SFMono-Regular, Menlo, monospace;
   line-height: 1;
 }
@@ -635,13 +637,13 @@ textarea {
 }
 
 .btn-secondary {
-  background: var(--indigo-700);
+  background: var(--green-700);
   color: var(--text-light);
   box-shadow: 0 6px 0 #221e5c;
 }
 
 .btn-secondary:hover {
-  background: var(--indigo-600);
+  background: var(--green-600);
 }
 
 .feature-list {
@@ -762,7 +764,7 @@ textarea {
   background: transparent;
   border: none;
   font-size: 2.2rem;
-  color: var(--indigo-800);
+  color: var(--green-800);
   cursor: pointer;
   line-height: 1;
   padding: 0;
@@ -790,4 +792,39 @@ textarea {
   .qr-modal-content canvas { padding: 10px; }
   .qr-thumb { width: 46px; height: 46px; }
   .qr-thumb svg { width: 28px; height: 28px; }
+}
+
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+}
+
+.logo-lg .logo-img {
+  padding: 12px;
+}
+
+.school-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 14px;
+  background: rgba(15, 99, 14, 0.06);
+  border-radius: var(--radius-sm);
+}
+
+.school-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.school-logo-img {
+  max-width: 180px;
+  max-height: 70px;
+  object-fit: contain;
 }

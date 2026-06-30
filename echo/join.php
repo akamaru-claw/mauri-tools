@@ -3,22 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#1e1a4b">
+  <meta name="theme-color" content="#0f630e">
   <title>Mauri Echo – Antworten</title>
-  <link rel="stylesheet" href="style.css?v=3">
-  <link rel="manifest" href="manifest.json?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="manifest" href="manifest.json?v=4">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
 </head>
 <body>
   <div class="soundwave"></div>
   <a href="index.php" class="btn btn-ghost back-link" style="position:fixed;top:16px;left:16px;z-index:10;padding:10px 16px;">← Start</a>
   <div class="student-view">
     <div class="logo" aria-hidden="true">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="46" fill="#fbbf24"/>
-        <path d="M28 50c0-12 9-22 22-22s22 10 22 22-9 22-22 22" fill="none" stroke="#1e1a4b" stroke-width="8" stroke-linecap="round"/>
-        <path d="M68 36c8 8 8 28 0 36" fill="none" stroke="#1e1a4b" stroke-width="7" stroke-linecap="round"/>
-        <path d="M78 28c12 12 12 42 0 54" fill="none" stroke="#1e1a4b" stroke-width="6" stroke-linecap="round"/>
-      </svg>
+      <img src="logo.svg" alt="Mauri Echo Logo" class="logo-img">
     </div>
     <h2>Mauri Echo</h2>
     <p id="questionDisplay" class="question-display">Lade Frage...</p>
